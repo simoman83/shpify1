@@ -1,47 +1,307 @@
-<section class="hero-section">
-  <div class="hero-slider">
-    {% if section.settings.background_image %}
-      <div class="hero-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url({{ section.settings.background_image | img_url: '1920x' }})">
-    {% else %}
-      <div class="hero-slide" style="background: linear-gradient(135deg, #f57224 0%, #ff8c42 100%)">
-    {% endif %}
-      <div class="container">
-        <div class="hero-content">
-          <h1>{{ section.settings.title | default: "Welcome to " | append: shop.name }}</h1>
-          <p>{{ section.settings.subtitle | default: "Discover amazing products with free delivery" }}</p>
-          {% if section.settings.button_text != blank %}
-            <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn btn-hero">
-              {{ section.settings.button_text }}
-            </a>
-          {% else %}
-            <a href="/collections/all" class="btn btn-hero">Shop Now</a>
-          {% endif %}
+<section class="hero-section" style="{% if section.settings.background_image %}background-image: url({{ section.settings.background_image | img_url: '1920x' }});{% else %}background: linear-gradient(135deg, {{ section.settings.gradient_start | default: '#f57224' }} 0%, {{ section.settings.gradient_end | default: '#ff8c42' }} 100%);{% endif %} background-size: cover; background-position: center; position: relative;">
+
+  {% if section.settings.background_image and section.settings.show_overlay %}
+    <div class="hero-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }});"></div>
+  {% endif %}
+
+  <div class="container" style="position: relative; z-index: 2;">
+    <div class="hero-content" style="text-align: {{ section.settings.text_align }}; padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px; max-width: {{ section.settings.content_width }}px; margin: 0 {% if section.settings.text_align == 'center' %}auto{% elsif section.settings.text_align == 'right' %}0 0 auto{% else %}0 auto 0 0{% endif %};">
+
+      {% if section.settings.show_badge and section.settings.badge_text != blank %}
+        <div class="hero-badge" style="display: inline-block; background: {{ section.settings.badge_bg | default: '#fff' }}; color: {{ section.settings.badge_color | default: '#f57224' }}; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 16px;">
+          {{ section.settings.badge_text }}
         </div>
+      {% endif %}
+
+      <h1 class="hero-title" style="font-size: {{ section.settings.title_size }}px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; color: {{ section.settings.title_color }};">
+        {{ section.settings.title | default: shop.name }}
+      </h1>
+
+      {% if section.settings.subtitle != blank %}
+        <p class="hero-subtitle" style="font-size: {{ section.settings.subtitle_size }}px; line-height: 1.6; margin-bottom: 32px; color: {{ section.settings.subtitle_color }}; max-width: 600px; margin-left: {% if section.settings.text_align == 'center' %}auto{% elsif section.settings.text_align == 'right' %}auto{% else %}0{% endif %}; margin-right: {% if section.settings.text_align == 'center' %}auto{% elsif section.settings.text_align == 'right' %}0{% else %}auto{% endif %};">
+          {{ section.settings.subtitle }}
+        </p>
+      {% endif %}
+
+      <div class="hero-buttons" style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: {% if section.settings.text_align == 'center' %}center{% elsif section.settings.text_align == 'right' %}flex-end{% else %}flex-start{% endif %};">
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn-hero-primary" style="background: {{ section.settings.button_bg | default: '#fff' }}; color: {{ section.settings.button_text_color | default: '#f57224' }}; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+            {{ section.settings.button_text }}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        {% endif %}
+
+        {% if section.settings.button_2_text != blank %}
+          <a href="{{ section.settings.button_2_link | default: '/collections/all' }}" class="btn-hero-secondary" style="background: transparent; color: {{ section.settings.button_2_color | default: '#fff' }}; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px; border: 2px solid {{ section.settings.button_2_color | default: '#fff' }}; transition: all 0.3s; text-decoration: none;">
+            {{ section.settings.button_2_text }}
+          </a>
+        {% endif %}
       </div>
+
+      {% if section.settings.show_features %}
+        <div class="hero-features" style="display: flex; gap: 24px; margin-top: 40px; flex-wrap: wrap; justify-content: {% if section.settings.text_align == 'center' %}center{% elsif section.settings.text_align == 'right' %}flex-end{% else %}flex-start{% endif %};">
+          <div class="hero-feature" style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: {{ section.settings.subtitle_color }};">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Free Delivery
+          </div>
+          <div class="hero-feature" style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: {{ section.settings.subtitle_color }};">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Cash on Delivery
+          </div>
+          <div class="hero-feature" style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: {{ section.settings.subtitle_color }};">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            30-Day Returns
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
 </section>
+
+<style>
+  .hero-section {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-hero-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2) !important;
+  }
+
+  .btn-hero-secondary:hover {
+    background: {{ section.settings.button_2_color | default: '#fff' }} !important;
+    color: {{ section.settings.gradient_start | default: '#f57224' }} !important;
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      min-height: 320px;
+    }
+
+    .hero-title {
+      font-size: calc({{ section.settings.title_size }}px * 0.7) !important;
+    }
+
+    .hero-subtitle {
+      font-size: calc({{ section.settings.subtitle_size }}px * 0.9) !important;
+    }
+
+    .hero-content {
+      text-align: center !important;
+      padding: 40px 20px !important;
+    }
+
+    .hero-buttons {
+      justify-content: center !important;
+      flex-direction: column;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero-features {
+      justify-content: center !important;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px !important;
+    }
+  }
+</style>
 
 {% schema %}
 {
   "name": "Hero Section",
   "settings": [
     {
+      "type": "header",
+      "content": "Background"
+    },
+    {
       "type": "image_picker",
       "id": "background_image",
-      "label": "Background Image"
+      "label": "Background Image",
+      "info": "Recommended size: 1920x600px. Leave empty to use gradient."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show Overlay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay Opacity",
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "gradient_start",
+      "label": "Gradient Start Color",
+      "default": "#f57224"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end",
+      "label": "Gradient End Color",
+      "default": "#ff8c42"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 400,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "label": "Content Max Width",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show Badge",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "⚡ Special Offer"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge Text Color",
+      "default": "#f57224"
+    },
+    {
+      "type": "header",
+      "content": "Title"
     },
     {
       "type": "text",
       "id": "title",
       "label": "Title",
-      "default": "Welcome to Our Store"
+      "default": "Shop Smarter, Live Better"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Size",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Subtitle"
     },
     {
       "type": "textarea",
       "id": "subtitle",
       "label": "Subtitle",
-      "default": "Discover amazing products"
+      "default": "Discover amazing deals with free delivery and cash on delivery"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle Size",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
     },
     {
       "type": "text",
@@ -53,6 +313,49 @@
       "type": "url",
       "id": "button_link",
       "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#f57224"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 Text",
+      "info": "Leave empty to hide"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "color",
+      "id": "button_2_color",
+      "label": "Button 2 Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Features"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_features",
+      "label": "Show Feature Badges",
+      "default": true
     }
   ],
   "presets": [

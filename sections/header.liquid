@@ -1,8 +1,10 @@
 <header class="site-header">
+  <!-- Top Header Bar -->
   <div class="header-top">
     <div class="container">
       <div class="header-inner">
-        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open menu">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -10,6 +12,7 @@
           </svg>
         </button>
 
+        <!-- Logo -->
         {% if section.settings.logo %}
           <a href="/" class="site-logo">
             <img src="{{ section.settings.logo | img_url: '150x' }}" alt="{{ shop.name }}">
@@ -20,10 +23,11 @@
           </a>
         {% endif %}
 
+        <!-- Search Bar -->
         <div class="search-bar">
           <form action="/search" method="get">
-            <input type="text" name="q" placeholder="Search products..." class="search-input" value="{{ search.terms }}">
-            <button type="submit" class="search-btn">
+            <input type="text" name="q" placeholder="Search products..." class="search-input" value="{{ search.terms }}" autocomplete="off">
+            <button type="submit" class="search-btn" aria-label="Search">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM18 18l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               </svg>
@@ -31,35 +35,44 @@
           </form>
         </div>
 
+        <!-- Account Link -->
         <div class="header-actions">
           <a href="/account" class="account-link">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="currentColor" stroke-width="2"/>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
             </svg>
-            <span class="desktop-only">Account</span>
+            <span class="desktop-text">Account</span>
           </a>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="header-categories">
+  <!-- Desktop Navigation -->
+  <div class="header-nav">
     <div class="container">
-      <nav class="category-nav">
+      <nav class="desktop-nav">
         <ul>
           {% if linklists.main-menu.links.size > 0 %}
-            {% for link in linklists.main-menu.links limit: 10 %}
-              <li>
-                <a href="{{ link.url }}">{{ link.title }}</a>
-              </li>
+            {% for link in linklists.main-menu.links limit: 8 %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {% endfor %}
           {% else %}
+            <!-- Default links - only show if collections exist -->
+            <li><a href="/">Home</a></li>
             <li><a href="/collections/all">All Products</a></li>
-            <li><a href="/collections/all">New Arrivals</a></li>
-            <li><a href="/collections/all">Best Sellers</a></li>
-            <li><a href="/collections/all">On Sale</a></li>
-            <li><a href="/pages/about">About</a></li>
-            <li><a href="/pages/contact">Contact</a></li>
+            {% assign best_sellers = collections['best-sellers'] %}
+            {% if best_sellers.products_count > 0 %}
+              <li><a href="/collections/best-sellers">Best Sellers</a></li>
+            {% endif %}
+            {% assign on_sale = collections['on-sale'] %}
+            {% if on_sale.products_count > 0 %}
+              <li><a href="/collections/on-sale">On Sale</a></li>
+            {% endif %}
+            {% assign new_arrivals = collections['new-arrivals'] %}
+            {% if new_arrivals.products_count > 0 %}
+              <li><a href="/collections/new-arrivals">New Arrivals</a></li>
+            {% endif %}
           {% endif %}
         </ul>
       </nav>
@@ -67,40 +80,75 @@
   </div>
 </header>
 
-<!-- Mobile Menu Sidebar -->
+<!-- Mobile Menu Overlay -->
 <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+<!-- Mobile Menu Sidebar -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-header">
-    <h3>Menu</h3>
-    <button class="mobile-menu-close" id="mobileMenuClose">
+    <div class="mobile-menu-logo">
+      {% if section.settings.logo %}
+        <img src="{{ section.settings.logo | img_url: '100x' }}" alt="{{ shop.name }}">
+      {% else %}
+        <span>{{ shop.name }}</span>
+      {% endif %}
+    </div>
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
   </div>
+
   <nav class="mobile-menu-nav">
     <ul>
       {% if linklists.main-menu.links.size > 0 %}
         {% for link in linklists.main-menu.links %}
-          <li>
-            <a href="{{ link.url }}">{{ link.title }}</a>
-          </li>
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
         {% endfor %}
       {% else %}
-        <li><a href="/">Home</a></li>
-        <li><a href="/collections/all">All Products</a></li>
-        <li><a href="/collections/all">Categories</a></li>
-        <li><a href="/collections/all">New Arrivals</a></li>
-        <li><a href="/collections/all">Best Sellers</a></li>
-        <li><a href="/collections/all">On Sale</a></li>
-        <li><a href="/pages/about">About Us</a></li>
-        <li><a href="/pages/contact">Contact</a></li>
+        <!-- Default mobile links - conditional -->
+        <li><a href="/">🏠 Home</a></li>
+        <li><a href="/collections/all">🛍️ All Products</a></li>
+
+        {% assign best_sellers = collections['best-sellers'] %}
+        {% if best_sellers.products_count > 0 %}
+          <li><a href="/collections/best-sellers">⭐ Best Sellers</a></li>
+        {% endif %}
+
+        {% assign on_sale = collections['on-sale'] %}
+        {% if on_sale.products_count > 0 %}
+          <li><a href="/collections/on-sale">🔥 On Sale</a></li>
+        {% endif %}
+
+        {% assign new_arrivals = collections['new-arrivals'] %}
+        {% if new_arrivals.products_count > 0 %}
+          <li><a href="/collections/new-arrivals">🆕 New Arrivals</a></li>
+        {% endif %}
+
+        {% assign flash_sale = collections['flash-sale'] %}
+        {% if flash_sale.products_count > 0 %}
+          <li><a href="/collections/flash-sale">⚡ Flash Sale</a></li>
+        {% endif %}
+
+        <li class="menu-divider"></li>
+
+        {% assign about = pages['about'] %}
+        {% if about.id %}
+          <li><a href="/pages/about">ℹ️ About Us</a></li>
+        {% endif %}
+
+        {% assign contact = pages['contact'] %}
+        {% if contact.id %}
+          <li><a href="/pages/contact">📧 Contact</a></li>
+        {% endif %}
       {% endif %}
     </ul>
   </nav>
+
   <div class="mobile-menu-footer">
-    <a href="/account" class="mobile-menu-account">
+    <a href="/account" class="mobile-account-btn">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
       </svg>
@@ -116,7 +164,8 @@
     {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo Image"
+      "label": "Logo Image",
+      "info": "Recommended size: 200x60px"
     }
   ]
 }

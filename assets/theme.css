@@ -1977,3 +1977,150 @@ button {
     padding: 0 20px;
   }
 }
+
+/* ========================================
+   16. IMPROVED HEADER & NAVIGATION
+======================================== */
+
+/* Desktop Navigation Improvements */
+.header-nav {
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+  display: none;
+}
+
+.desktop-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+}
+
+.desktop-nav li {
+  margin: 0;
+}
+
+.desktop-nav a {
+  display: block;
+  padding: 12px 20px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s;
+  border-radius: 6px;
+  position: relative;
+}
+
+.desktop-nav a:hover {
+  color: #f57224;
+  background: #fff5f0;
+}
+
+.desktop-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 20px;
+  height: 2px;
+  background: #f57224;
+  transition: transform 0.3s;
+}
+
+.desktop-nav a:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.desktop-text {
+  display: none;
+}
+
+/* Mobile Menu Improvements */
+.mobile-menu-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f57224;
+}
+
+.mobile-menu-logo img {
+  max-height: 40px;
+  width: auto;
+}
+
+.menu-divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 12px 0;
+  list-style: none;
+}
+
+.mobile-account-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #f57224 0%, #ff8c42 100%);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  margin: 16px;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.mobile-account-btn:hover {
+  transform: scale(1.02);
+}
+
+/* Account Link Styling */
+.account-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  color: #333;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.account-link:hover {
+  background: #f7f7f7;
+  color: #f57224;
+}
+
+/* Responsive Header */
+@media (min-width: 768px) {
+  .header-nav {
+    display: block;
+  }
+
+  .desktop-text {
+    display: inline;
+  }
+
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktop-nav ul {
+    gap: 8px;
+  }
+
+  .desktop-nav a {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+}
+
+/* Empty State for Navigation */
+.nav-empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+  font-size: 13px;
+}
