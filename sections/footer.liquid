@@ -30,30 +30,22 @@
       </div>
 
       <div class="footer-links">
-        <h4>Customer Service</h4>
+        <h4>Shop</h4>
         <ul>
-          {% if linklists.footer.links.size > 0 %}
-            {% for link in linklists.footer.links %}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {% endfor %}
-          {% else %}
-            <li><a href="/pages/about">About Us</a></li>
-            <li><a href="/pages/contact">Contact Us</a></li>
-            <li><a href="/pages/shipping">Shipping Info</a></li>
-            <li><a href="/pages/returns">Returns & Exchanges</a></li>
-            <li><a href="/pages/faq">FAQ</a></li>
-          {% endif %}
+          <li><a href="/">Home</a></li>
+          <li><a href="/search">All Products</a></li>
+          <li><a href="/search?q=new">New Arrivals</a></li>
+          <li><a href="/search?q=sale">On Sale</a></li>
         </ul>
       </div>
 
       <div class="footer-links">
-        <h4>Quick Links</h4>
+        <h4>Customer Care</h4>
         <ul>
-          <li><a href="/collections/all">All Products</a></li>
-          <li><a href="/collections/all">New Arrivals</a></li>
-          <li><a href="/collections/all">Best Sellers</a></li>
-          <li><a href="/account">My Account</a></li>
-          <li><a href="/search">Search</a></li>
+          <li><a href="/search">Shop Now</a></li>
+          <li><a href="/">Track Order</a></li>
+          <li><a href="/">Help Center</a></li>
+          <li><a href="/">Contact Us</a></li>
         </ul>
       </div>
 
@@ -77,12 +69,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
-      <div class="footer-bottom-links">
-        <a href="/policies/privacy-policy">Privacy Policy</a>
-        <span>•</span>
-        <a href="/policies/terms-of-service">Terms of Service</a>
-      </div>
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved. Free Delivery • Cash on Delivery Available</p>
     </div>
   </div>
 </footer>

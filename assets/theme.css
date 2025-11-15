@@ -18,14 +18,14 @@ html {
   scroll-behavior: smooth;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #333;
-  background: #f5f5f5;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #1a1a1a;
+  background: #f8f8f8;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -610,17 +610,17 @@ button {
 }
 
 .footer-info h3 {
-  font-size: 22px;
-  margin-bottom: 12px;
+  font-size: 26px;
+  margin-bottom: 14px;
   color: #f57224;
   font-weight: 700;
 }
 
 .footer-info p {
-  font-size: 17px;
+  font-size: 19px;
   color: #ccc;
-  line-height: 1.7;
-  margin-bottom: 16px;
+  line-height: 1.8;
+  margin-bottom: 18px;
 }
 
 .footer-social {
@@ -644,8 +644,8 @@ button {
 }
 
 .footer-links h4 {
-  font-size: 18px;
-  margin-bottom: 12px;
+  font-size: 22px;
+  margin-bottom: 14px;
   font-weight: 700;
 }
 
@@ -655,10 +655,11 @@ button {
 
 .footer-links a {
   display: block;
-  padding: 6px 0;
-  font-size: 16px;
+  padding: 8px 0;
+  font-size: 18px;
   color: #ccc;
-  transition: color 0.2s;
+  transition: color 0.3s;
+  font-weight: 500;
 }
 
 .footer-links a:hover {
@@ -667,10 +668,11 @@ button {
 
 .footer-bottom {
   border-top: 1px solid #444;
-  padding-top: 20px;
+  padding-top: 24px;
   text-align: center;
-  font-size: 15px;
+  font-size: 17px;
   color: #999;
+  line-height: 1.6;
 }
 
 /* ========================================
@@ -2673,84 +2675,98 @@ button {
 }
 
 /* ========================================
-   19. BIGGER TEXT GLOBALLY - INCREASED
+   19. ULTRA BIG TEXT GLOBALLY - MAXIMUM READABILITY
 ======================================== */
 body {
-  font-size: 18px !important;
-  line-height: 1.7;
+  font-size: 20px !important;
+  line-height: 1.8;
+  color: #1a1a1a;
 }
 
-.section-title {
-  font-size: 30px !important;
+.section-title,
+.section-header h2 {
+  font-size: 36px !important;
   font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
 }
 
 .product-title {
-  font-size: 17px !important;
-  line-height: 1.4;
+  font-size: 19px !important;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #1a1a1a;
 }
 
 .price {
-  font-size: 22px !important;
+  font-size: 26px !important;
   font-weight: 700;
+  color: #d32f2f;
 }
 
 .product-title-hero {
-  font-size: 28px !important;
-  line-height: 1.3;
+  font-size: 32px !important;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 .hero-title {
-  font-size: 38px !important;
-  font-weight: 700;
+  font-size: 42px !important;
+  font-weight: 800;
   line-height: 1.2;
+  color: #fff;
+  letter-spacing: -1px;
 }
 
 .hero-subtitle {
-  font-size: 20px !important;
-  line-height: 1.5;
+  font-size: 22px !important;
+  line-height: 1.6;
+  color: #fff;
+  opacity: 0.95;
 }
 
 @media (min-width: 768px) {
   body {
-    font-size: 20px !important;
-  }
-
-  .section-title {
-    font-size: 36px !important;
-  }
-
-  .product-title {
-    font-size: 19px !important;
-  }
-
-  .price {
-    font-size: 24px !important;
-  }
-
-  .product-title-hero {
-    font-size: 36px !important;
-  }
-
-  .hero-title {
-    font-size: 48px !important;
-  }
-
-  .hero-subtitle {
     font-size: 22px !important;
   }
 
+  .section-title,
+  .section-header h2 {
+    font-size: 42px !important;
+  }
+
+  .product-title {
+    font-size: 21px !important;
+  }
+
+  .price {
+    font-size: 28px !important;
+  }
+
+  .product-title-hero {
+    font-size: 40px !important;
+  }
+
+  .hero-title {
+    font-size: 56px !important;
+  }
+
+  .hero-subtitle {
+    font-size: 26px !important;
+  }
+
   .description-header h2 {
-    font-size: 36px;
+    font-size: 40px;
   }
 
   .product-description-content {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .product-description-content p,
   .product-description-content li {
-    font-size: 20px;
+    font-size: 22px;
     line-height: 2;
   }
 }
@@ -2761,9 +2777,10 @@ body {
 @media (max-width: 767px) {
   /* General mobile fixes */
   body {
-    font-size: 16px !important;
+    font-size: 18px !important;
     overflow-x: hidden;
-    line-height: 1.6;
+    line-height: 1.7;
+    color: #1a1a1a;
   }
 
   /* Container - reduce padding on mobile */
@@ -2819,12 +2836,15 @@ body {
 
   .section-header h2,
   .section-title {
-    font-size: 22px !important;
+    font-size: 28px !important;
     font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
   }
 
   .view-all {
-    font-size: 14px;
+    font-size: 17px;
+    font-weight: 600;
   }
 
   /* Hero section - mobile optimized */
@@ -2837,16 +2857,17 @@ body {
   }
 
   .hero-title {
-    font-size: 28px !important;
+    font-size: 34px !important;
     line-height: 1.2;
     margin-bottom: 12px;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.5px;
   }
 
   .hero-subtitle {
-    font-size: 17px !important;
+    font-size: 19px !important;
     margin-bottom: 16px;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   .hero-badge {
@@ -2880,49 +2901,54 @@ body {
   }
 
   .category-name {
-    font-size: 13px;
-    line-height: 1.2;
-    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #1a1a1a;
   }
 
   /* Product grid - mobile optimized */
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 12px;
     padding: 0 12px;
   }
 
   .product-card {
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
 
   .product-image {
-    border-radius: 8px 8px 0 0;
+    border-radius: 12px 12px 0 0;
   }
 
   .product-info {
-    padding: 10px;
+    padding: 12px;
   }
 
   .product-title {
-    font-size: 15px !important;
-    line-height: 1.3;
-    margin-bottom: 6px;
+    font-size: 17px !important;
+    line-height: 1.4;
+    margin-bottom: 8px;
     font-weight: 600;
+    color: #1a1a1a;
   }
 
   .price {
-    font-size: 19px !important;
+    font-size: 22px !important;
     font-weight: 700;
+    color: #d32f2f;
   }
 
   .original-price {
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .discount-badge {
-    font-size: 10px;
-    padding: 2px 6px;
+    font-size: 13px;
+    padding: 4px 8px;
+    font-weight: 700;
   }
 
   /* Product landing page - mobile optimized */
@@ -2970,44 +2996,48 @@ body {
   }
 
   .product-title-hero {
-    font-size: 22px !important;
-    margin-bottom: 10px;
+    font-size: 26px !important;
+    margin-bottom: 12px;
     font-weight: 700;
     line-height: 1.3;
+    color: #1a1a1a;
   }
 
   .product-rating {
-    font-size: 14px;
-    margin-bottom: 12px;
+    font-size: 16px;
+    margin-bottom: 14px;
   }
 
   .stars {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .product-pricing-hero {
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 12px;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff5f0 0%, #ffe8dc 100%);
   }
 
   .price-compare {
-    gap: 8px;
-    margin-bottom: 6px;
+    gap: 10px;
+    margin-bottom: 8px;
   }
 
   .original-price-hero {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .discount-badge-hero {
-    font-size: 12px;
-    padding: 3px 6px;
+    font-size: 14px;
+    padding: 4px 8px;
+    font-weight: 700;
   }
 
   .current-price-hero {
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 36px;
+    font-weight: 800;
+    color: #d32f2f;
   }
 
   .price-note {
@@ -3070,14 +3100,16 @@ body {
   /* CTA buttons on mobile */
   .cta-primary,
   .btn-primary {
-    font-size: 17px;
-    padding: 16px 24px;
-    font-weight: 600;
+    font-size: 20px;
+    padding: 18px 28px;
+    font-weight: 700;
+    border-radius: 12px;
   }
 
   .btn-secondary {
-    font-size: 16px;
-    padding: 14px 20px;
+    font-size: 18px;
+    padding: 16px 24px;
+    border-radius: 12px;
   }
 
   /* Product description - mobile optimized */
@@ -3087,45 +3119,50 @@ body {
   }
 
   .description-header {
-    gap: 12px;
-    margin-bottom: 20px;
-    padding-bottom: 16px;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
   }
 
   .description-header svg {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
   }
 
   .description-header h2 {
-    font-size: 24px !important;
+    font-size: 28px !important;
     font-weight: 700;
+    color: #1a1a1a;
   }
 
   .product-description-content {
-    font-size: 17px;
+    font-size: 19px;
     line-height: 1.8;
+    color: #333;
   }
 
   .product-description-content h1 {
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 700;
+    color: #1a1a1a;
   }
 
   .product-description-content h2 {
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 700;
+    color: #1a1a1a;
   }
 
   .product-description-content h3 {
-    font-size: 19px;
+    font-size: 22px;
     font-weight: 600;
+    color: #1a1a1a;
   }
 
   .product-description-content p,
   .product-description-content li {
-    font-size: 17px;
-    line-height: 1.7;
+    font-size: 19px;
+    line-height: 1.8;
   }
 
   .product-description-content ul,
@@ -3171,36 +3208,38 @@ body {
   }
 
   .footer-info h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 12px;
     font-weight: 700;
+    color: #f57224;
   }
 
   .footer-info p {
-    font-size: 16px;
-    margin-bottom: 12px;
-    line-height: 1.6;
+    font-size: 18px;
+    margin-bottom: 14px;
+    line-height: 1.7;
+    color: #ccc;
   }
 
   .footer-social a {
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
   }
 
   .footer-links h4 {
-    font-size: 17px;
-    margin-bottom: 10px;
+    font-size: 20px;
+    margin-bottom: 12px;
     font-weight: 700;
   }
 
   .footer-links a {
-    font-size: 15px;
-    padding: 5px 0;
+    font-size: 17px;
+    padding: 6px 0;
   }
 
   .footer-bottom {
-    padding-top: 16px;
-    font-size: 14px;
+    padding-top: 20px;
+    font-size: 16px;
   }
 
   /* Fix any potential overflow issues */
@@ -3240,5 +3279,192 @@ body {
   .mobile-account-btn {
     font-size: 14px;
     padding: 12px;
+  }
+}
+
+/* ========================================
+   21. ULTRA-PRO COLOR SCHEME & CTA OPTIMIZATION
+======================================== */
+
+/* Primary CTA - Maximum Conversion Optimization */
+.cta-primary,
+.btn-confirm-order,
+button[type="submit"] {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4) !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.cta-primary:hover,
+.btn-confirm-order:hover,
+button[type="submit"]:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5) !important;
+}
+
+.cta-primary:active,
+.btn-confirm-order:active,
+button[type="submit"]:active {
+  transform: translateY(0) !important;
+}
+
+/* Product Cards - Better Contrast */
+.product-card {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  border-color: #ff6b35;
+}
+
+/* Price Emphasis - Psychological Pricing */
+.price {
+  color: #d32f2f !important;
+  text-shadow: 0 1px 2px rgba(211, 47, 47, 0.1);
+}
+
+.current-price-hero {
+  color: #d32f2f !important;
+}
+
+/* Urgency Colors */
+.urgency-banner,
+.flash-sale-section {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
+}
+
+.discount-badge,
+.flash-sale-badge {
+  background: #d32f2f !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+}
+
+/* Trust Signals - Green for Safety */
+.trust-badge,
+.benefit-item {
+  color: #2e7d32 !important;
+}
+
+.benefit-item svg {
+  stroke: #2e7d32 !important;
+}
+
+/* Search Input - Better Visibility */
+.search-input {
+  border: 2px solid #e0e0e0 !important;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #ff6b35 !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* Form Inputs - Professional */
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+textarea {
+  border: 2px solid #e0e0e0 !important;
+  transition: border-color 0.3s;
+  background: #fff !important;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #ff6b35 !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* Category Icons - Better Visibility */
+.category-icon {
+  background: linear-gradient(135deg, #fff5f0 0%, #ffe8dc 100%);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.category-item:hover .category-icon {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  border-color: #ff6b35;
+  transform: scale(1.1);
+}
+
+/* Flash Sale Timer - High Contrast */
+.flash-sale-timer {
+  background: rgba(255,255,255,0.25) !important;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+/* Stock Indicators */
+.stock-text {
+  color: #d32f2f !important;
+  font-weight: 700 !important;
+}
+
+.stock-fill {
+  background: linear-gradient(90deg, #ff6b35 0%, #f7931e 100%) !important;
+}
+
+/* Header - Professional */
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+/* Hero Buttons - Prominent */
+.btn-hero-primary {
+  background: #fff !important;
+  color: #ff6b35 !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
+  font-weight: 700 !important;
+  font-size: 19px !important;
+  padding: 16px 36px !important;
+}
+
+.btn-hero-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25) !important;
+}
+
+.btn-hero-secondary {
+  border: 3px solid #fff !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  padding: 14px 32px !important;
+}
+
+.btn-hero-secondary:hover {
+  background: rgba(255,255,255,0.2) !important;
+}
+
+/* Mobile Specific Improvements */
+@media (max-width: 767px) {
+  .cta-primary,
+  .btn-confirm-order,
+  button[type="submit"] {
+    font-size: 18px !important;
+    padding: 16px 24px !important;
+  }
+
+  .btn-hero-primary {
+    font-size: 17px !important;
+    padding: 14px 28px !important;
   }
 }
