@@ -1,0 +1,31 @@
+<!-- Simple Product Page for Testing -->
+<section class="product-page">
+  <div class="container">
+    <h1>{{ product.title }}</h1>
+
+    {% if product.featured_image %}
+      <img src="{{ product.featured_image | img_url: '600x600' }}" alt="{{ product.title }}">
+    {% endif %}
+
+    <div class="product-price">
+      {{ product.price | money }}
+    </div>
+
+    {% if product.description != blank %}
+      <div class="product-description">
+        {{ product.description }}
+      </div>
+    {% endif %}
+
+    <button type="button" class="btn-order" onclick="alert('COD Form would open here')">
+      Order Now - Cash on Delivery
+    </button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Simple",
+  "settings": []
+}
+{% endschema %}
