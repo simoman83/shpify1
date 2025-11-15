@@ -13,12 +13,23 @@
     "color_secondary": "#ffffff",
     "type_header_font": "helvetica_n4",
     "type_body_font": "helvetica_n4",
-    "blocks": {
-      "pagefly-page-builder": {
-        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
-        "disabled": false,
-        "settings": {}
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify://shop_images/360_F_320726662_XVxhHxXYGwXnBMkHRnEeHJ4hA6gH0DqN.jpg"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "footer_text": "Your trusted online shopping destination with free delivery and cash on delivery options.",
+          "social_facebook": "",
+          "social_instagram": "",
+          "social_twitter": ""
+        }
       }
-    }
+    },
+    "content_for_index": []
   }
 }
