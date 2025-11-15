@@ -1,0 +1,428 @@
+<!-- Product Landing Page -->
+<section class="product-page">
+
+  <!-- Hero Section -->
+  <div class="product-hero">
+    <div class="container">
+      <div class="product-hero-layout">
+
+        <!-- Product Images -->
+        <div class="product-gallery">
+          <div class="main-product-image">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | img_url: '800x800' }}" alt="{{ product.title }}" id="mainProductImage">
+            {% else %}
+              <div class="product-image-placeholder-large">
+                <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="#ddd" stroke-width="1">
+                  <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+              </div>
+            {% endif %}
+
+            {% if product.compare_at_price and product.compare_at_price > product.price %}
+              {% assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | floor %}
+              <div class="product-badge-hero">
+                <span class="save-badge">SAVE {{ discount_percent }}%</span>
+              </div>
+            {% endif %}
+          </div>
+
+          {% if product.images.size > 1 %}
+            <div class="product-thumbnails">
+              {% for image in product.images limit: 6 %}
+                <div class="product-thumb {% if forloop.first %}active{% endif %}" data-image="{{ image | img_url: '800x800' }}">
+                  <img src="{{ image | img_url: '100x100' }}" alt="{{ product.title }}">
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <!-- Trust Badges -->
+          <div class="trust-badges">
+            <div class="trust-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a1 1 0 00-1 1v11a2 2 0 002 2h14a2 2 0 002-2V8a1 1 0 00-1-1zM10 5h4v2h-4V5z"/>
+              </svg>
+              <span>Free Delivery</span>
+            </div>
+            <div class="trust-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <span>Secure Payment</span>
+            </div>
+            <div class="trust-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Quality Guaranteed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-details-hero">
+
+          <!-- Product Title -->
+          <h1 class="product-title-hero">{{ product.title }}</h1>
+
+          <!-- Rating & Reviews -->
+          <div class="product-rating">
+            <div class="stars">
+              ★★★★★
+            </div>
+            <span class="rating-text">
+              <strong>4.8</strong> ({{ product.metafields.custom.review_count | default: '127' }} reviews)
+            </span>
+            <span class="separator-dot">•</span>
+            <span class="sold-count">
+              <strong>{{ product.metafields.custom.sold_count | default: '1,245' }}</strong> sold
+            </span>
+          </div>
+
+          <!-- Pricing -->
+          <div class="product-pricing-hero">
+            {% if product.compare_at_price and product.compare_at_price > product.price %}
+              {% assign price_discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | floor %}
+              <div class="price-compare">
+                <span class="original-price-hero">{{ product.compare_at_price | money }}</span>
+                <span class="discount-badge-hero">-{{ price_discount }}%</span>
+              </div>
+            {% endif %}
+            <div class="current-price-hero">{{ product.price | money }}</div>
+            <p class="price-note">Cash on Delivery Available • Free Shipping</p>
+          </div>
+
+          <!-- Urgency Timer -->
+          <div class="urgency-banner">
+            <div class="urgency-icon">🔥</div>
+            <div class="urgency-text">
+              <strong>Limited Time Offer!</strong>
+              <span>Offer ends in: <span class="urgency-timer" id="productTimer">23:45:12</span></span>
+            </div>
+          </div>
+
+          <!-- Key Features -->
+          <div class="key-features">
+            <h3>Why Choose This Product?</h3>
+            <ul class="feature-list">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Premium Quality Materials
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Fast & Free Delivery
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                100% Money Back Guarantee
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Verified Customer Reviews
+              </li>
+            </ul>
+          </div>
+
+          <!-- Variant Selection -->
+          {% unless product.has_only_default_variant %}
+            <div class="product-options">
+              {% for option in product.options_with_values %}
+                <div class="option-group">
+                  <label class="option-label">{{ option.name }}:</label>
+                  <div class="option-values">
+                    {% for value in option.values %}
+                      <button type="button" class="option-btn {% if forloop.first %}active{% endif %}" data-option="{{ option.name }}" data-value="{{ value }}">
+                        {{ value }}
+                      </button>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endunless %}
+
+          <!-- Quantity -->
+          <div class="quantity-section">
+            <label class="option-label">Quantity:</label>
+            <div class="quantity-selector-hero">
+              <button type="button" class="qty-btn-hero qty-minus-hero">−</button>
+              <input type="number" class="qty-input-hero" value="1" min="1" max="99" id="productQty">
+              <button type="button" class="qty-btn-hero qty-plus-hero">+</button>
+            </div>
+            <span class="stock-indicator">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              In Stock - Ready to Ship
+            </span>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="product-cta">
+            <button class="btn-order-now" id="orderNowBtn" data-product-id="{{ product.id }}" data-product-title="{{ product.title }}" data-product-price="{{ product.price }}" data-product-image="{{ product.featured_image | img_url: '200x200' }}">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4"></path>
+                <path d="M3 7v13a2 2 0 002 2h14a2 2 0 002-2V7"></path>
+              </svg>
+              Order Now - Cash on Delivery
+            </button>
+            <p class="cta-subtext">✓ No payment needed now • ✓ Pay when you receive</p>
+          </div>
+
+          <!-- Guarantee -->
+          <div class="guarantee-box">
+            <div class="guarantee-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </div>
+            <div class="guarantee-text">
+              <strong>30-Day Money-Back Guarantee</strong>
+              <p>Not satisfied? Get a full refund within 30 days!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Description -->
+  {% if product.description != blank %}
+    <div class="product-description-section">
+      <div class="container-narrow">
+        <h2 class="section-title">Product Description</h2>
+        <div class="product-description-content">
+          {{ product.description }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Features Grid -->
+  <div class="features-section">
+    <div class="container-narrow">
+      <h2 class="section-title">Product Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f57224" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3>Fast Delivery</h3>
+          <p>Get your order delivered within 2-5 business days</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f57224" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h3>Quality Assured</h3>
+          <p>Premium materials with strict quality control</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f57224" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </div>
+          <h3>Easy Returns</h3>
+          <p>Hassle-free returns within 30 days</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f57224" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h3>24/7 Support</h3>
+          <p>Customer service available anytime you need</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="reviews-section">
+    <div class="container-narrow">
+      <h2 class="section-title">Customer Reviews</h2>
+
+      <div class="reviews-summary">
+        <div class="rating-overview">
+          <div class="big-rating">4.8</div>
+          <div class="stars-large">★★★★★</div>
+          <p>Based on {{ product.metafields.custom.review_count | default: '127' }} reviews</p>
+        </div>
+        <div class="rating-bars">
+          <div class="rating-bar-item">
+            <span>5 ★</span>
+            <div class="rating-bar"><div class="rating-fill" style="width: 85%"></div></div>
+            <span>85%</span>
+          </div>
+          <div class="rating-bar-item">
+            <span>4 ★</span>
+            <div class="rating-bar"><div class="rating-fill" style="width: 10%"></div></div>
+            <span>10%</span>
+          </div>
+          <div class="rating-bar-item">
+            <span>3 ★</span>
+            <div class="rating-bar"><div class="rating-fill" style="width: 3%"></div></div>
+            <span>3%</span>
+          </div>
+          <div class="rating-bar-item">
+            <span>2 ★</span>
+            <div class="rating-bar"><div class="rating-fill" style="width: 1%"></div></div>
+            <span>1%</span>
+          </div>
+          <div class="rating-bar-item">
+            <span>1 ★</span>
+            <div class="rating-bar"><div class="rating-fill" style="width: 1%"></div></div>
+            <span>1%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reviews-list">
+        <!-- Sample Review 1 -->
+        <div class="review-item">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <div class="reviewer-avatar">JD</div>
+              <div>
+                <div class="reviewer-name">John D.</div>
+                <div class="review-stars">★★★★★</div>
+              </div>
+            </div>
+            <div class="review-date">2 days ago</div>
+          </div>
+          <div class="review-text">
+            <strong>Excellent quality!</strong> Better than expected. Fast delivery and great customer service. Highly recommend!
+          </div>
+          <div class="review-verified">✓ Verified Purchase</div>
+        </div>
+
+        <!-- Sample Review 2 -->
+        <div class="review-item">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <div class="reviewer-avatar">SM</div>
+              <div>
+                <div class="reviewer-name">Sarah M.</div>
+                <div class="review-stars">★★★★★</div>
+              </div>
+            </div>
+            <div class="review-date">5 days ago</div>
+          </div>
+          <div class="review-text">
+            Love it! Exactly as described. The cash on delivery option made it so easy. Will order again!
+          </div>
+          <div class="review-verified">✓ Verified Purchase</div>
+        </div>
+
+        <!-- Sample Review 3 -->
+        <div class="review-item">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <div class="reviewer-avatar">MK</div>
+              <div>
+                <div class="reviewer-name">Mike K.</div>
+                <div class="review-stars">★★★★☆</div>
+              </div>
+            </div>
+            <div class="review-date">1 week ago</div>
+          </div>
+          <div class="review-text">
+            Great product! Only minor issue was delivery took 4 days instead of 2, but overall very satisfied.
+          </div>
+          <div class="review-verified">✓ Verified Purchase</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="faq-section">
+    <div class="container-narrow">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">How does Cash on Delivery work?</div>
+          <div class="faq-answer">Simply place your order and pay when your product is delivered to your doorstep. No advance payment needed!</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">How long does delivery take?</div>
+          <div class="faq-answer">Standard delivery takes 2-5 business days. You'll receive a tracking number once your order ships.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">What is your return policy?</div>
+          <div class="faq-answer">We offer a 30-day money-back guarantee. If you're not satisfied, return it for a full refund!</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Is this product authentic?</div>
+          <div class="faq-answer">Yes! All our products are 100% authentic and come with quality guarantees.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Can I change or cancel my order?</div>
+          <div class="faq-answer">Yes, you can modify or cancel your order within 24 hours of placement. Contact our support team.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final CTA -->
+  <div class="final-cta-section">
+    <div class="container-narrow">
+      <div class="final-cta-box">
+        <h2>Ready to Order?</h2>
+        <p>Join thousands of satisfied customers • Cash on Delivery • Free Shipping</p>
+        <button class="btn-order-now-large" onclick="document.getElementById('orderNowBtn').click()">
+          Order Now - Pay on Delivery
+        </button>
+        <p class="trust-text">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Secure & Safe • Your data is protected
+        </p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Sticky Mobile Button -->
+<div class="sticky-mobile-cta" id="stickyBtn">
+  <div class="sticky-cta-content">
+    <div class="sticky-price">{{ product.price | money }}</div>
+    <button class="btn-sticky-order" onclick="document.getElementById('orderNowBtn').click()">
+      Order Now
+    </button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}
