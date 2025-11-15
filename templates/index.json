@@ -43,6 +43,7 @@
     },
     "categories": {
       "type": "category-grid",
+      "disabled": true,
       "settings": {
         "title": "Shop by Category"
       }
