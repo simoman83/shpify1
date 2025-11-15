@@ -3,12 +3,23 @@
     "hero": {
       "type": "hero-section"
     },
+    "flash-sale": {
+      "type": "flash-sale"
+    },
     "featured-products": {
       "type": "featured-products"
+    },
+    "just-for-you": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Just For You"
+      }
     }
   },
   "order": [
     "hero",
-    "featured-products"
+    "flash-sale",
+    "featured-products",
+    "just-for-you"
   ]
 }

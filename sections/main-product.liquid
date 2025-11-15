@@ -2,30 +2,92 @@
   <div class="container">
     <div class="product-layout">
       <div class="product-images">
-        <img src="{{ product.featured_image | img_url: '800x' }}" alt="{{ product.title }}">
+        <div class="main-image">
+          <img src="{{ product.featured_image | img_url: '600x600' }}" alt="{{ product.title }}" id="mainImage">
+        </div>
+        {% if product.images.size > 1 %}
+          <div class="image-thumbnails">
+            {% for image in product.images limit: 6 %}
+              <div class="thumbnail {% if forloop.first %}active{% endif %}" data-image="{{ image | img_url: '600x600' }}">
+                <img src="{{ image | img_url: '80x80' }}" alt="{{ product.title }}">
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
 
       <div class="product-info">
-        <h1>{{ product.title }}</h1>
-        <p class="product-price">{{ product.price | money }}</p>
+        <h1 class="product-name">{{ product.title }}</h1>
 
-        <div class="product-description">
-          {{ product.description }}
+        <div class="product-ratings">
+          <div class="rating-stars">
+            ★★★★★
+          </div>
+          <span class="rating-count">({{ product.metafields.custom.rating_count | default: '0' }} ratings)</span>
+          <span class="separator">|</span>
+          <span class="sold-count">{{ product.metafields.custom.sold_count | default: '0' }} Sold</span>
         </div>
 
-        {% form 'product', product %}
-          <select name="id">
-            {% for variant in product.variants %}
-              <option value="{{ variant.id }}" {% if variant.available == false %}disabled{% endif %}>
-                {{ variant.title }} - {{ variant.price | money }}
-              </option>
-            {% endfor %}
-          </select>
+        <div class="product-pricing">
+          {% if product.compare_at_price > product.price %}
+            <div class="discount-info">
+              <span class="original-price">{{ product.compare_at_price | money }}</span>
+              <span class="discount-percent">-{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
+            </div>
+          {% endif %}
+          <p class="current-price">{{ product.price | money }}</p>
+        </div>
 
-          <button type="submit" name="add" class="btn btn-primary">
-            Add to Cart
+        <div class="product-meta">
+          <div class="meta-row">
+            <span class="meta-label">Delivery:</span>
+            <span class="meta-value">
+              <svg width="16" height="16" viewBox="0 0 16 16"><path d="M13 4h-2V3a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h1.1a2.5 2.5 0 0 0 4.8 0h2.2a2.5 2.5 0 0 0 4.8 0H15V7l-2-3zM5.5 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>
+              Free Delivery
+            </span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Location:</span>
+            <span class="meta-value">{{ product.metafields.custom.location | default: 'Local' }}</span>
+          </div>
+        </div>
+
+        <div class="product-variants">
+          {% unless product.has_only_default_variant %}
+            {% for option in product.options_with_values %}
+              <div class="variant-option">
+                <label>{{ option.name }}:</label>
+                <div class="variant-buttons" data-option-index="{{ forloop.index0 }}">
+                  {% for value in option.values %}
+                    <button type="button" class="variant-btn {% if forloop.first %}active{% endif %}" data-value="{{ value }}">
+                      {{ value }}
+                    </button>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          {% endunless %}
+
+          <div class="quantity-selector">
+            <label>Quantity:</label>
+            <div class="quantity-controls">
+              <button type="button" class="qty-btn qty-minus">−</button>
+              <input type="number" class="qty-input" value="1" min="1" max="999" id="productQuantity">
+              <button type="button" class="qty-btn qty-plus">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <button type="button" class="btn btn-buy-now" id="buyNowBtn" data-product-id="{{ product.id }}" data-product-title="{{ product.title }}" data-product-price="{{ product.price }}">
+            Buy Now - Cash on Delivery
           </button>
-        {% endform %}
+        </div>
+
+        <div class="product-description">
+          <h3>Product Details</h3>
+          {{ product.description }}
+        </div>
       </div>
     </div>
   </div>
