@@ -21,9 +21,10 @@
               </div>
             {% endif %}
 
-            {% if product.compare_at_price > product.price %}
+            {% if product.compare_at_price and product.compare_at_price > product.price %}
+              {% assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | floor %}
               <div class="product-badge-hero">
-                <span class="save-badge">SAVE {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
+                <span class="save-badge">SAVE {{ discount_percent }}%</span>
               </div>
             {% endif %}
           </div>
@@ -84,10 +85,11 @@
 
           <!-- Pricing -->
           <div class="product-pricing-hero">
-            {% if product.compare_at_price > product.price %}
+            {% if product.compare_at_price and product.compare_at_price > product.price %}
+              {% assign price_discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | floor %}
               <div class="price-compare">
                 <span class="original-price-hero">{{ product.compare_at_price | money }}</span>
-                <span class="discount-badge-hero">-{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
+                <span class="discount-badge-hero">-{{ price_discount }}%</span>
               </div>
             {% endif %}
             <div class="current-price-hero">{{ product.price | money }}</div>
@@ -199,14 +201,16 @@
   </div>
 
   <!-- Product Description -->
-  <div class="product-description-section">
-    <div class="container-narrow">
-      <h2 class="section-title">Product Description</h2>
-      <div class="product-description-content">
-        {{ product.description }}
+  {% if product.description != blank %}
+    <div class="product-description-section">
+      <div class="container-narrow">
+        <h2 class="section-title">Product Description</h2>
+        <div class="product-description-content">
+          {{ product.description }}
+        </div>
       </div>
     </div>
-  </div>
+  {% endif %}
 
   <!-- Features Grid -->
   <div class="features-section">
