@@ -30,10 +30,10 @@
           </a>
         {% endfor %}
       {% else %}
-        {%  comment %} Default categories if none set {% endcomment %}
+        {%  comment %} Default categories - link to search for now to avoid 404s {% endcomment %}
         {% assign default_categories = "Electronics,Fashion,Home & Living,Beauty,Sports,Toys,Books,Health" | split: "," %}
         {% for category in default_categories limit: 8 %}
-          <a href="/collections/all" class="category-item">
+          <a href="/search?q={{ category | url_encode }}" class="category-item">
             <div class="category-icon">
               <div class="category-icon-placeholder">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
