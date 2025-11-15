@@ -1,0 +1,138 @@
+<section class="product-carousel-section" style="background: #fff; padding: 24px 0; margin: 16px 0; border-radius: 8px;">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ section.settings.title | default: 'Trending Now' }}</h2>
+      {% if section.settings.collection != blank %}
+        <a href="/collections/{{ section.settings.collection }}" class="view-all">View All ›</a>
+      {% endif %}
+    </div>
+
+    <div class="carousel-wrapper" style="position: relative; margin-top: 16px;">
+      {% if section.settings.collection != blank %}
+        {% assign collection_products = collections[section.settings.collection].products %}
+      {% else %}
+        {% assign collection_products = collections.all.products %}
+      {% endif %}
+
+      {% if collection_products.size > 0 %}
+        <div class="carousel-container" id="carousel-{{ section.id }}" style="overflow-x: auto; display: flex; gap: 12px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scroll-behavior: smooth;">
+          {% for product in collection_products limit: 12 %}
+            <div class="carousel-item" style="flex: 0 0 160px; scroll-snap-align: start;">
+              <div class="product-card">
+                <a href="{{ product.url }}" class="product-link">
+                  <div class="product-image">
+                    {% if product.featured_image %}
+                      <img src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.title }}" loading="lazy">
+                    {% else %}
+                      <div class="product-image-placeholder">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5">
+                          <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                          <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                      </div>
+                    {% endif %}
+                    {% if product.compare_at_price and product.compare_at_price > product.price %}
+                      {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | floor %}
+                      <span class="discount-badge">-{{ discount }}%</span>
+                    {% endif %}
+                  </div>
+                  <div class="product-info">
+                    <h3 class="product-title">{{ product.title }}</h3>
+                    <div class="product-pricing">
+                      <span class="price">{{ product.price | money }}</span>
+                      {% if product.compare_at_price and product.compare_at_price > product.price %}
+                        <span class="original-price">{{ product.compare_at_price | money }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <button class="carousel-btn carousel-prev" onclick="scrollCarousel('carousel-{{ section.id }}', -1)" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.95); border: none; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer; display: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <button class="carousel-btn carousel-next" onclick="scrollCarousel('carousel-{{ section.id }}', 1)" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.95); border: none; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer; display: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <style>
+          @media (min-width: 768px) {
+            .carousel-wrapper:hover .carousel-btn {
+              display: flex !important;
+              align-items: center;
+              justify-content: center;
+            }
+            .carousel-item {
+              flex: 0 0 200px !important;
+            }
+          }
+
+          .carousel-container::-webkit-scrollbar {
+            height: 6px;
+          }
+
+          .carousel-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 3px;
+          }
+
+          .carousel-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+          }
+
+          .carousel-container::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+          }
+        </style>
+
+        <script>
+          function scrollCarousel(id, direction) {
+            const carousel = document.getElementById(id);
+            const scrollAmount = carousel.offsetWidth * 0.8;
+            carousel.scrollBy({
+              left: direction * scrollAmount,
+              behavior: 'smooth'
+            });
+          }
+        </script>
+
+      {% else %}
+        <p style="text-align: center; color: #999; padding: 40px 0;">No products available</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Trending Now"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Carousel"
+    }
+  ]
+}
+{% endschema %}

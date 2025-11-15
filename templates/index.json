@@ -47,13 +47,27 @@
         "title": "Just For You",
         "products_to_show": 12
       }
+    },
+    "carousel-best-sellers": {
+      "type": "product-carousel",
+      "settings": {
+        "title": "⭐ Best Sellers"
+      }
+    },
+    "carousel-new-arrivals": {
+      "type": "product-carousel",
+      "settings": {
+        "title": "🆕 New Arrivals"
+      }
     }
   },
   "order": [
     "hero",
     "categories",
     "flash-sale",
+    "carousel-best-sellers",
     "featured-products",
+    "carousel-new-arrivals",
     "trending",
     "just-for-you"
   ]
