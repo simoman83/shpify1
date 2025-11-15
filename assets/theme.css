@@ -396,23 +396,16 @@ button {
 }
 
 /* ========================================
-   7. CATEGORY GRID
+   7. CATEGORY GRID - FIXED
 ======================================== */
-.category-grid {
+.category-grid-section {
   background: #fff;
   padding: 24px 0;
   margin: 16px 0;
   border-radius: 8px;
 }
 
-.category-grid-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  padding: 0 16px;
-}
-
-.categories {
+.category-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
@@ -421,29 +414,86 @@ button {
 
 .category-item {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.category-item:hover {
+  transform: translateY(-4px);
 }
 
 .category-icon {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   background: #f7f7f7;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 8px;
-  transition: all 0.2s;
+  margin-bottom: 12px;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.category-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.category-icon-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
 }
 
 .category-item:hover .category-icon {
   background: #f57224;
-  color: #fff;
   transform: scale(1.1);
 }
 
+.category-item:hover .category-icon-placeholder {
+  color: #fff;
+}
+
 .category-name {
-  font-size: 12px;
+  font-size: 13px;
   color: #333;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.category-item:hover .category-name {
+  color: #f57224;
+}
+
+@media (max-width: 768px) {
+  .category-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .category-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .category-name {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 769px) {
+  .category-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 20px;
+  }
 }
 
 /* ========================================

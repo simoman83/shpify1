@@ -61,18 +61,6 @@
             <!-- Default links - only show if collections exist -->
             <li><a href="/">Home</a></li>
             <li><a href="/collections/all">All Products</a></li>
-            {% assign best_sellers = collections['best-sellers'] %}
-            {% if best_sellers.products_count > 0 %}
-              <li><a href="/collections/best-sellers">Best Sellers</a></li>
-            {% endif %}
-            {% assign on_sale = collections['on-sale'] %}
-            {% if on_sale.products_count > 0 %}
-              <li><a href="/collections/on-sale">On Sale</a></li>
-            {% endif %}
-            {% assign new_arrivals = collections['new-arrivals'] %}
-            {% if new_arrivals.products_count > 0 %}
-              <li><a href="/collections/new-arrivals">New Arrivals</a></li>
-            {% endif %}
           {% endif %}
         </ul>
       </nav>
@@ -108,41 +96,9 @@
           <li><a href="{{ link.url }}">{{ link.title }}</a></li>
         {% endfor %}
       {% else %}
-        <!-- Default mobile links - conditional -->
+        <!-- Default mobile links -->
         <li><a href="/">🏠 Home</a></li>
         <li><a href="/collections/all">🛍️ All Products</a></li>
-
-        {% assign best_sellers = collections['best-sellers'] %}
-        {% if best_sellers.products_count > 0 %}
-          <li><a href="/collections/best-sellers">⭐ Best Sellers</a></li>
-        {% endif %}
-
-        {% assign on_sale = collections['on-sale'] %}
-        {% if on_sale.products_count > 0 %}
-          <li><a href="/collections/on-sale">🔥 On Sale</a></li>
-        {% endif %}
-
-        {% assign new_arrivals = collections['new-arrivals'] %}
-        {% if new_arrivals.products_count > 0 %}
-          <li><a href="/collections/new-arrivals">🆕 New Arrivals</a></li>
-        {% endif %}
-
-        {% assign flash_sale = collections['flash-sale'] %}
-        {% if flash_sale.products_count > 0 %}
-          <li><a href="/collections/flash-sale">⚡ Flash Sale</a></li>
-        {% endif %}
-
-        <li class="menu-divider"></li>
-
-        {% assign about = pages['about'] %}
-        {% if about.id %}
-          <li><a href="/pages/about">ℹ️ About Us</a></li>
-        {% endif %}
-
-        {% assign contact = pages['contact'] %}
-        {% if contact.id %}
-          <li><a href="/pages/contact">📧 Contact</a></li>
-        {% endif %}
       {% endif %}
     </ul>
   </nav>
