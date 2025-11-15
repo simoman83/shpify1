@@ -119,35 +119,53 @@ document.addEventListener('DOMContentLoaded', function() {
   const orderSuccess = document.getElementById('orderSuccess');
 
   // Open modal when Buy Now button is clicked
-  if (buyNowBtn) {
-    buyNowBtn.addEventListener('click', function() {
-      const productId = this.getAttribute('data-product-id');
-      const productTitle = this.getAttribute('data-product-title');
-      const productPrice = this.getAttribute('data-product-price');
-      const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+  const buyNowButtons = document.querySelectorAll('#orderNowBtn, #buyNowBtn');
 
-      // Get selected variant if exists
-      const selectedVariants = [];
-      document.querySelectorAll('.variant-btn.active').forEach(btn => {
-        selectedVariants.push(btn.getAttribute('data-value'));
+  buyNowButtons.forEach(btn => {
+    if (btn) {
+      btn.addEventListener('click', function() {
+        const productId = this.getAttribute('data-product-id');
+        const productTitle = this.getAttribute('data-product-title');
+        const productPrice = this.getAttribute('data-product-price');
+        const productImage = this.getAttribute('data-product-image');
+
+        // Get quantity
+        const qtyInputHero = document.getElementById('productQty');
+        const qtyInputStandard = document.getElementById('productQuantity');
+        const quantity = qtyInputHero ? parseInt(qtyInputHero.value) : (qtyInputStandard ? parseInt(qtyInputStandard.value) : 1);
+
+        // Get selected variants if exists
+        const selectedVariants = [];
+        document.querySelectorAll('.option-btn.active, .variant-btn.active').forEach(btn => {
+          selectedVariants.push(btn.getAttribute('data-value'));
+        });
+
+        // Calculate total
+        const priceNum = parseFloat(productPrice) / 100; // Shopify stores prices in cents
+        const total = priceNum * quantity;
+
+        // Update modal content
+        document.getElementById('orderProductName').textContent = productTitle;
+        document.getElementById('orderQuantity').textContent = quantity;
+        document.getElementById('orderPrice').textContent = formatMoney(productPrice);
+
+        // Update product image in modal
+        const orderProductImage = document.getElementById('orderProductImage');
+        if (orderProductImage && productImage) {
+          orderProductImage.src = productImage;
+          orderProductImage.alt = productTitle;
+        }
+
+        document.getElementById('productId').value = productId;
+
+        // Show modal
+        if (codModal) {
+          codModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
       });
-
-      // Calculate total
-      const priceNum = parseFloat(productPrice) / 100; // Shopify stores prices in cents
-      const total = priceNum * quantity;
-
-      // Update modal content
-      document.getElementById('orderProductName').textContent = productTitle;
-      document.getElementById('orderQuantity').textContent = quantity;
-      document.getElementById('orderPrice').textContent = formatMoney(productPrice);
-      document.getElementById('orderTotal').textContent = formatMoney(total * 100);
-      document.getElementById('productId').value = productId;
-
-      // Show modal
-      codModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-  }
+    }
+  });
 
   // Close modal functions
   function closeModalFunc() {
@@ -388,5 +406,157 @@ document.addEventListener('DOMContentLoaded', function() {
     const lazyImages = document.querySelectorAll('img[data-src]');
     lazyImages.forEach(img => imageObserver.observe(img));
   }
+
+  // ==========================================
+  // Product Page - Image Gallery
+  // ==========================================
+
+  const productThumbs = document.querySelectorAll('.product-thumb');
+  const mainProductImage = document.getElementById('mainProductImage');
+
+  productThumbs.forEach(thumb => {
+    thumb.addEventListener('click', function() {
+      // Remove active class from all thumbnails
+      productThumbs.forEach(t => t.classList.remove('active'));
+
+      // Add active class to clicked thumbnail
+      this.classList.add('active');
+
+      // Update main image
+      const newImageSrc = this.getAttribute('data-image');
+      if (mainProductImage && newImageSrc) {
+        mainProductImage.src = newImageSrc;
+      }
+    });
+  });
+
+  // ==========================================
+  // Product Page - Quantity Controls (Hero)
+  // ==========================================
+
+  const qtyPlusHero = document.querySelector('.qty-plus-hero');
+  const qtyMinusHero = document.querySelector('.qty-minus-hero');
+  const qtyInputHero = document.getElementById('productQty');
+
+  if (qtyPlusHero && qtyInputHero) {
+    qtyPlusHero.addEventListener('click', function() {
+      let currentValue = parseInt(qtyInputHero.value) || 1;
+      let maxValue = parseInt(qtyInputHero.max) || 99;
+      if (currentValue < maxValue) {
+        qtyInputHero.value = currentValue + 1;
+      }
+    });
+  }
+
+  if (qtyMinusHero && qtyInputHero) {
+    qtyMinusHero.addEventListener('click', function() {
+      let currentValue = parseInt(qtyInputHero.value) || 1;
+      let minValue = parseInt(qtyInputHero.min) || 1;
+      if (currentValue > minValue) {
+        qtyInputHero.value = currentValue - 1;
+      }
+    });
+  }
+
+  // ==========================================
+  // Product Page - Option Buttons
+  // ==========================================
+
+  const optionButtons = document.querySelectorAll('.option-btn');
+
+  optionButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Get parent option values container
+      const container = this.closest('.option-values');
+
+      // Remove active class from all buttons in this container
+      container.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Add active class to clicked button
+      this.classList.add('active');
+    });
+  });
+
+  // ==========================================
+  // Product Page - Urgency Timer
+  // ==========================================
+
+  const productTimer = document.getElementById('productTimer');
+
+  if (productTimer) {
+    // Set timer to 24 hours from now
+    const endTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+
+    function updateProductTimer() {
+      const now = new Date().getTime();
+      const distance = endTime - now;
+
+      if (distance < 0) {
+        productTimer.textContent = '00:00:00';
+        return;
+      }
+
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      productTimer.textContent =
+        String(hours).padStart(2, '0') + ':' +
+        String(minutes).padStart(2, '0') + ':' +
+        String(seconds).padStart(2, '0');
+    }
+
+    updateProductTimer();
+    setInterval(updateProductTimer, 1000);
+  }
+
+  // ==========================================
+  // Product Page - Sticky Mobile CTA
+  // ==========================================
+
+  const stickyBtn = document.getElementById('stickyBtn');
+
+  if (stickyBtn) {
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', function() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      // Show sticky button when scrolling down past 300px
+      if (scrollTop > 300) {
+        stickyBtn.classList.add('visible');
+      } else {
+        stickyBtn.classList.remove('visible');
+      }
+
+      lastScrollTop = scrollTop;
+    });
+  }
+
+  // ==========================================
+  // Product Page - FAQ Accordion
+  // ==========================================
+
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+
+    if (question) {
+      question.addEventListener('click', function() {
+        // Toggle active class
+        item.classList.toggle('active');
+
+        // Close other FAQs (optional - for accordion behavior)
+        // faqItems.forEach(otherItem => {
+        //   if (otherItem !== item) {
+        //     otherItem.classList.remove('active');
+        //   }
+        // });
+      });
+    }
+  });
 
 });
