@@ -25,7 +25,7 @@
 
       <div class="hero-buttons" style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: {% if section.settings.text_align == 'center' %}center{% elsif section.settings.text_align == 'right' %}flex-end{% else %}flex-start{% endif %};">
         {% if section.settings.button_text != blank %}
-          <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn-hero-primary" style="background: {{ section.settings.button_bg | default: '#fff' }}; color: {{ section.settings.button_text_color | default: '#f57224' }}; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+          <a href="{{ section.settings.button_link | default: '/search' }}" class="btn-hero-primary" style="background: {{ section.settings.button_bg | default: '#fff' }}; color: {{ section.settings.button_text_color | default: '#f57224' }}; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
             {{ section.settings.button_text }}
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -35,7 +35,7 @@
         {% endif %}
 
         {% if section.settings.button_2_text != blank %}
-          <a href="{{ section.settings.button_2_link | default: '/collections/all' }}" class="btn-hero-secondary" style="background: transparent; color: {{ section.settings.button_2_color | default: '#fff' }}; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px; border: 2px solid {{ section.settings.button_2_color | default: '#fff' }}; transition: all 0.3s; text-decoration: none;">
+          <a href="{{ section.settings.button_2_link | default: '/search' }}" class="btn-hero-secondary" style="background: transparent; color: {{ section.settings.button_2_color | default: '#fff' }}; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px; border: 2px solid {{ section.settings.button_2_color | default: '#fff' }}; transition: all 0.3s; text-decoration: none;">
             {{ section.settings.button_2_text }}
           </a>
         {% endif %}
