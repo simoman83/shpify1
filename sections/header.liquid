@@ -2,6 +2,14 @@
   <div class="header-top">
     <div class="container">
       <div class="header-inner">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
         {% if section.settings.logo %}
           <a href="/" class="site-logo">
             <img src="{{ section.settings.logo | img_url: '150x' }}" alt="{{ shop.name }}">
@@ -14,7 +22,7 @@
 
         <div class="search-bar">
           <form action="/search" method="get">
-            <input type="text" name="q" placeholder="Search in {{ shop.name }}" class="search-input">
+            <input type="text" name="q" placeholder="Search products..." class="search-input" value="{{ search.terms }}">
             <button type="submit" class="search-btn">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM18 18l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -28,7 +36,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="currentColor" stroke-width="2"/>
             </svg>
-            <span>Account</span>
+            <span class="desktop-only">Account</span>
           </a>
         </div>
       </div>
@@ -39,16 +47,67 @@
     <div class="container">
       <nav class="category-nav">
         <ul>
-          {% for link in linklists.main-menu.links limit: 10 %}
-            <li>
-              <a href="{{ link.url }}">{{ link.title }}</a>
-            </li>
-          {% endfor %}
+          {% if linklists.main-menu.links.size > 0 %}
+            {% for link in linklists.main-menu.links limit: 10 %}
+              <li>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          {% else %}
+            <li><a href="/collections/all">All Products</a></li>
+            <li><a href="/collections/all">New Arrivals</a></li>
+            <li><a href="/collections/all">Best Sellers</a></li>
+            <li><a href="/collections/all">On Sale</a></li>
+            <li><a href="/pages/about">About</a></li>
+            <li><a href="/pages/contact">Contact</a></li>
+          {% endif %}
         </ul>
       </nav>
     </div>
   </div>
 </header>
+
+<!-- Mobile Menu Sidebar -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <h3>Menu</h3>
+    <button class="mobile-menu-close" id="mobileMenuClose">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <nav class="mobile-menu-nav">
+    <ul>
+      {% if linklists.main-menu.links.size > 0 %}
+        {% for link in linklists.main-menu.links %}
+          <li>
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          </li>
+        {% endfor %}
+      {% else %}
+        <li><a href="/">Home</a></li>
+        <li><a href="/collections/all">All Products</a></li>
+        <li><a href="/collections/all">Categories</a></li>
+        <li><a href="/collections/all">New Arrivals</a></li>
+        <li><a href="/collections/all">Best Sellers</a></li>
+        <li><a href="/collections/all">On Sale</a></li>
+        <li><a href="/pages/about">About Us</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  <div class="mobile-menu-footer">
+    <a href="/account" class="mobile-menu-account">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+      </svg>
+      My Account
+    </a>
+  </div>
+</div>
 
 {% schema %}
 {

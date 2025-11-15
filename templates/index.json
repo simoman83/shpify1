@@ -1,25 +1,50 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-section"
+      "type": "hero-section",
+      "settings": {
+        "title": "Shop Smarter, Live Better",
+        "subtitle": "Discover amazing deals with free delivery and cash on delivery"
+      }
+    },
+    "categories": {
+      "type": "category-grid"
     },
     "flash-sale": {
-      "type": "flash-sale"
+      "type": "flash-sale",
+      "settings": {
+        "title": "Flash Sale",
+        "products_to_show": 6
+      }
     },
     "featured-products": {
-      "type": "featured-products"
+      "type": "featured-products",
+      "settings": {
+        "title": "Top Picks For You",
+        "products_to_show": 12
+      }
+    },
+    "trending": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Trending Now",
+        "products_to_show": 12
+      }
     },
     "just-for-you": {
       "type": "featured-products",
       "settings": {
-        "title": "Just For You"
+        "title": "Just For You",
+        "products_to_show": 12
       }
     }
   },
   "order": [
     "hero",
+    "categories",
     "flash-sale",
     "featured-products",
+    "trending",
     "just-for-you"
   ]
 }

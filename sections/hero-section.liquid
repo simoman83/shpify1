@@ -1,13 +1,23 @@
-<section class="hero-section" style="background-image: url({{ section.settings.background_image | img_url: '1920x' }})">
-  <div class="container">
-    <div class="hero-content">
-      <h1>{{ section.settings.title }}</h1>
-      <p>{{ section.settings.subtitle }}</p>
-      {% if section.settings.button_text != blank %}
-        <a href="{{ section.settings.button_link }}" class="btn btn-primary">
-          {{ section.settings.button_text }}
-        </a>
-      {% endif %}
+<section class="hero-section">
+  <div class="hero-slider">
+    {% if section.settings.background_image %}
+      <div class="hero-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url({{ section.settings.background_image | img_url: '1920x' }})">
+    {% else %}
+      <div class="hero-slide" style="background: linear-gradient(135deg, #f57224 0%, #ff8c42 100%)">
+    {% endif %}
+      <div class="container">
+        <div class="hero-content">
+          <h1>{{ section.settings.title | default: "Welcome to " | append: shop.name }}</h1>
+          <p>{{ section.settings.subtitle | default: "Discover amazing products with free delivery" }}</p>
+          {% if section.settings.button_text != blank %}
+            <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn btn-hero">
+              {{ section.settings.button_text }}
+            </a>
+          {% else %}
+            <a href="/collections/all" class="btn btn-hero">Shop Now</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
   </div>
 </section>

@@ -5,13 +5,13 @@
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="#fff"/>
         </svg>
-        <h2>{{ section.settings.title }}</h2>
+        <h2>{{ section.settings.title | default: "Flash Sale" }}</h2>
       </div>
       {% if section.settings.show_timer %}
         <div class="flash-timer" id="flashTimer">
           <span class="timer-label">Ending in</span>
           <div class="timer-display">
-            <span class="timer-hours">00</span>:
+            <span class="timer-hours">02</span>:
             <span class="timer-minutes">00</span>:
             <span class="timer-seconds">00</span>
           </div>
@@ -20,29 +20,44 @@
     </div>
 
     <div class="flash-products">
-      {% for product in collections[section.settings.collection].products limit: section.settings.products_to_show %}
-        <div class="flash-product-card">
-          <a href="{{ product.url }}" class="product-link">
-            <div class="product-image">
-              <img src="{{ product.featured_image | img_url: '200x200' }}" alt="{{ product.title }}" loading="lazy">
-              {% if product.compare_at_price > product.price %}
-                <span class="flash-discount">
-                  -{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%
-                </span>
-              {% endif %}
-            </div>
-            <div class="product-info">
-              <p class="flash-price">{{ product.price | money }}</p>
-              {% if product.variants.first.inventory_quantity %}
+      {% if section.settings.collection != blank %}
+        {% assign flash_products = collections[section.settings.collection].products %}
+      {% else %}
+        {% assign flash_products = collections.all.products %}
+      {% endif %}
+
+      {% if flash_products.size > 0 %}
+        {% for product in flash_products limit: section.settings.products_to_show %}
+          <div class="flash-product-card">
+            <a href="{{ product.url }}" class="product-link">
+              <div class="product-image">
+                {% if product.featured_image %}
+                  <img src="{{ product.featured_image | img_url: '200x200' }}" alt="{{ product.title }}" loading="lazy">
+                {% else %}
+                  <div class="product-image-placeholder-small">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ddd" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                    </svg>
+                  </div>
+                {% endif %}
+                {% if product.compare_at_price > product.price %}
+                  <span class="flash-discount">
+                    -{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%
+                  </span>
+                {% endif %}
+              </div>
+              <div class="product-info">
+                <p class="flash-price">{{ product.price | money }}</p>
+                {% assign stock_percentage = 65 %}
                 <div class="stock-bar">
-                  <div class="stock-progress" style="width: {{ product.variants.first.inventory_quantity | times: 100 | divided_by: 100 | at_most: 100 }}%"></div>
+                  <div class="stock-progress" style="width: {{ stock_percentage }}%"></div>
                 </div>
-                <p class="stock-text">{{ product.variants.first.inventory_quantity }} left</p>
-              {% endif %}
-            </div>
-          </a>
-        </div>
-      {% endfor %}
+                <p class="stock-text">Limited stock!</p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 </section>
