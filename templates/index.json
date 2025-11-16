@@ -52,7 +52,7 @@
       "settings": {
         "title": "Flash Sale",
         "collection": "nouveaute",
-        "products_to_show": 6,
+        "products_to_show": 10,
         "show_timer": true,
         "stock_level": 65
       }
